@@ -56,9 +56,9 @@ function WorkflowSVG() {
     ["#F2A900","1.4s","0.4s","M622 118 C645 118 648 118 662 118"],
     ["#c9a84c","1.5s","0.7s","M622 128 C645 128 648 178 662 178"],
   ];
-  const inputs  = [["\u{1F4E7}",52,"Email"],["\u{1F4AC}",118,"WhatsApp"],["\u{1F4CB}",188,"Forms"]];
-  const middles = [["\u{2601}\uFE0F",55,"Cloud"],["\u{1F5C4}\uFE0F",118,"Database"],["\u{1F4EC}",178,"Queue"]];
-  const outputs = [["\u{1F4CA}",55,"Dashboard"],["\u{1F4C8}",118,"Reports"],["\u26A1",178,"Automate"]];
+  const inputs  = [["📧",52,"Email"],["💬",118,"WhatsApp"],["📋",188,"Forms"]];
+  const middles = [["☁️",55,"Cloud"],["🗄️",118,"Database"],["📬",178,"Queue"]];
+  const outputs = [["📊",55,"Dashboard"],["📈",118,"Reports"],["⚡",178,"Automate"]];
   const nF = "rgba(44,33,28,0.85)";
   const nS = "#8B6B61";
   const tC = "#bc998e";
@@ -115,7 +115,7 @@ function WorkflowSVG() {
         </g>
       ))}
       <rect x="558" y="84" width="64" height="66" rx="12" fill="rgba(44,33,28,0.92)" stroke="#F2A900" strokeWidth="2" filter="url(#glowS)"/>
-      <text x="590" y="108" textAnchor="middle" fontSize="16" fill="#F2A900" fontFamily="Inter,sans-serif">\u{1F9E0}</text>
+      <text x="590" y="108" textAnchor="middle" fontSize="16" fill="#F2A900" fontFamily="Inter,sans-serif">🧠</text>
       <text x="590" y="124" textAnchor="middle" fontSize="9"  fill="#fffdf1" fontFamily="Inter,sans-serif" fontWeight="700">AI Engine</text>
       <circle cx="590" cy="140" r="3.5" fill="#F2A900">
         <animate attributeName="r"       values="3.5;8;3.5" dur="2.2s" repeatCount="indefinite"/>
