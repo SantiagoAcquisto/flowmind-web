@@ -1,4 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// ── BREAKPOINTS ───────────────────────────────────────────────────────────────
+function useResponsive() {
+  const [w, setW] = useState(window.innerWidth);
+  useEffect(() => {
+    const fn = () => setW(window.innerWidth);
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
+  return { isMobile: w <= 767, isTablet: w >= 768 && w <= 1024, isDesktop: w >= 1025 };
+}
 
 // ── PALETA ──────────────────────────────────────────────────────────────────
 const C = {
@@ -217,40 +228,60 @@ function Formulario() {
 // ── APP ───────────────────────────────────────────────────────────────────────
 export default function FlowMind() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const scrollTo = id => document.getElementById(id)?.scrollIntoView({ behavior:"smooth" });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { isMobile, isTablet } = useResponsive();
+  const scrollTo = id => { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); setMenuOpen(false); };
 
-  const sec    = { padding:"8rem clamp(1.5rem,7vw,9rem)" };
+  const sec    = { padding: isMobile ? "4rem 1.5rem" : isTablet ? "6rem 3rem" : "8rem clamp(1.5rem,7vw,9rem)" };
   const slabel = { fontSize:"10px", color:C.muted, fontFamily:"Inter,sans-serif", letterSpacing:"0.2em", textTransform:"uppercase", marginBottom:"1.5rem", display:"block" };
-  const sh2    = { fontSize:"clamp(2rem,5vw,3.5rem)", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.text, margin:"0 0 1.5rem", lineHeight:1.05, letterSpacing:"-0.02em" };
+  const sh2    = { fontSize: isMobile ? "1.8rem" : "clamp(2rem,5vw,3.5rem)", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.text, margin:"0 0 1.5rem", lineHeight:1.05, letterSpacing:"-0.02em" };
 
   return (
     <div style={{ fontFamily:"Inter,sans-serif", background:C.bg, color:C.muted, minHeight:"100vh" }}>
       <link href={FONTS} rel="stylesheet"/>
 
       {/* NAV */}
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:100, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"1.2rem clamp(1.5rem,7vw,9rem)", background:"rgba(255,253,241,0.96)", backdropFilter:"blur(24px)", borderBottom:`1px solid ${C.border}` }}>
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:100, display:"flex", alignItems:"center", justifyContent:"space-between", padding: isMobile ? "1rem 1.5rem" : "1.2rem clamp(1.5rem,7vw,9rem)", background:"rgba(255,253,241,0.96)", backdropFilter:"blur(24px)", borderBottom:`1px solid ${C.border}` }}>
         <div style={{ display:"flex", alignItems:"center", gap:"12px", cursor:"pointer" }} onClick={()=>scrollTo("inicio")}>
-          <Logo size={62}/>
-          <span style={{ fontFamily:"'Playfair Display',serif", fontWeight:700, fontSize:"1.3rem", color:C.text }}>FlowMind</span>
+          <Logo size={isMobile ? 40 : 62}/>
+          <span style={{ fontFamily:"'Playfair Display',serif", fontWeight:700, fontSize: isMobile ? "1rem" : "1.3rem", color:C.text }}>FlowMind</span>
         </div>
-        <div style={{ display:"flex", gap:"2.5rem", alignItems:"center" }}>
-          {[["servicios","Servicios"],["nosotros","Nosotros"],["contacto","Contacto"]].map(([id,lbl]) => (
-            <button key={id} onClick={()=>scrollTo(id)} style={{ background:"none", border:"none", cursor:"pointer", fontSize:"13px", fontFamily:"Inter,sans-serif", color:C.muted, transition:"color 0.2s" }}
-              onMouseEnter={e=>e.target.style.color=C.primary}
-              onMouseLeave={e=>e.target.style.color=C.muted}
-            >{lbl}</button>
-          ))}
-          <button onClick={()=>scrollTo("contacto")} style={{ padding:"0.6rem 1.5rem", background:C.primary, color:C.primary3, border:"none", borderRadius:"4px", cursor:"pointer", fontFamily:"Inter,sans-serif", fontSize:"12px", fontWeight:600, transition:"opacity 0.2s" }}
-            onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
-            onMouseLeave={e=>e.currentTarget.style.opacity="1"}
-          >Contacto</button>
-        </div>
+
+        {/* Menú mobile */}
+        {isMobile ? (
+          <button onClick={()=>setMenuOpen(!menuOpen)} style={{ background:"none", border:"none", cursor:"pointer", fontSize:"24px", color:C.text }}>
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        ) : (
+          <div style={{ display:"flex", gap:"2.5rem", alignItems:"center" }}>
+            {[["servicios","Servicios"],["nosotros","Nosotros"],["contacto","Contacto"]].map(([id,lbl]) => (
+              <button key={id} onClick={()=>scrollTo(id)} style={{ background:"none", border:"none", cursor:"pointer", fontSize:"13px", fontFamily:"Inter,sans-serif", color:C.muted, transition:"color 0.2s" }}
+                onMouseEnter={e=>e.target.style.color=C.primary}
+                onMouseLeave={e=>e.target.style.color=C.muted}
+              >{lbl}</button>
+            ))}
+            <button onClick={()=>scrollTo("contacto")} style={{ padding:"0.6rem 1.5rem", background:C.primary, color:C.primary3, border:"none", borderRadius:"4px", cursor:"pointer", fontFamily:"Inter,sans-serif", fontSize:"12px", fontWeight:600, transition:"opacity 0.2s" }}
+              onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+              onMouseLeave={e=>e.currentTarget.style.opacity="1"}
+            >Contacto</button>
+          </div>
+        )}
       </nav>
 
+      {/* MENÚ MOBILE DESPLEGABLE */}
+      {isMobile && menuOpen && (
+        <div style={{ position:"fixed", top:"65px", left:0, right:0, zIndex:99, background:"rgba(255,253,241,0.98)", borderBottom:`1px solid ${C.border}`, padding:"1.5rem", display:"flex", flexDirection:"column", gap:"1.5rem" }}>
+          {[["servicios","Servicios"],["nosotros","Nosotros"],["contacto","Contacto"]].map(([id,lbl]) => (
+            <button key={id} onClick={()=>scrollTo(id)} style={{ background:"none", border:"none", cursor:"pointer", fontSize:"16px", fontFamily:"Inter,sans-serif", color:C.text, textAlign:"left", padding:0 }}>{lbl}</button>
+          ))}
+          <button onClick={()=>scrollTo("contacto")} style={{ padding:"0.8rem", background:C.primary, color:C.primary3, border:"none", borderRadius:"4px", cursor:"pointer", fontFamily:"Inter,sans-serif", fontSize:"14px", fontWeight:600 }}>Contacto</button>
+        </div>
+      )}
+
       {/* HERO */}
-      <section id="inicio" style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"flex-end", padding:"0 clamp(1.5rem,7vw,9rem) 6rem", background:`radial-gradient(ellipse at top left, rgba(242,169,0,0.06) 0%, transparent 60%), ${C.bg}` }}>
-        <div style={{ paddingTop:"10rem", maxWidth:"1200px" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:"5rem", alignItems:"flex-end" }}>
+      <section id="inicio" style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"flex-end", padding: isMobile ? "0 1.5rem 4rem" : "0 clamp(1.5rem,7vw,9rem) 6rem", background:`radial-gradient(ellipse at top left, rgba(242,169,0,0.06) 0%, transparent 60%), ${C.bg}` }}>
+        <div style={{ paddingTop: isMobile ? "7rem" : "10rem", maxWidth:"1200px" }}>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit,minmax(300px,1fr))", gap: isMobile ? "2rem" : "5rem", alignItems:"flex-end" }}>
             <div>
               <span style={{ fontSize:"10px", color:C.primary, fontFamily:"Inter,sans-serif", letterSpacing:"0.25em", textTransform:"uppercase", display:"block", marginBottom:"2rem" }}>FlowMind · Automatización IA</span>
               <h1 style={{ fontSize:"clamp(3rem,8vw,6.5rem)", fontFamily:"'Playfair Display',serif", fontWeight:800, color:C.text, margin:"0 0 2rem", lineHeight:0.95, letterSpacing:"-0.03em" }}>
@@ -296,8 +327,8 @@ export default function FlowMind() {
               No vendemos software genérico. Analizamos tu negocio, identificamos qué automatizar primero y construimos soluciones que realmente funcionan desde el día uno.
             </p>
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr", gap:"1.5rem", marginBottom:"5rem" }}>
-            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&h=600&fit=crop&q=80" alt="automatización" style={{ width:"100%", height:"520px", objectFit:"cover", borderRadius:"4px", filter:"brightness(0.7)" }}/>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr", gap:"1.5rem", marginBottom:"5rem" }}>
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&h=600&fit=crop&q=80" alt="automatización" style={{ width:"100%", height: isMobile ? "240px" : "520px", objectFit:"cover", borderRadius:"4px", filter:"brightness(0.7)" }}/>
             <div style={{ display:"flex", flexDirection:"column", gap:"1.5rem" }}>
               <div style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:"8px", padding:"2rem", flex:1, display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
                 <Logo size={32}/>
@@ -346,11 +377,33 @@ export default function FlowMind() {
               <WorkflowSVG/>
             </div>
           </div>
-          <div style={{ display:"flex", gap:"10px", overflowX:"auto", padding:"0.5rem 0" }}>
-            {SERVICIOS.map((item,i) => (
-              <AccordionItem key={i} item={item} isActive={activeIdx===i} onHover={()=>setActiveIdx(i)}/>
-            ))}
-          </div>
+          {isMobile ? (
+            <div style={{ display:"flex", flexDirection:"column", gap:"1rem" }}>
+              {SERVICIOS.map((item,i) => (
+                <div key={i} style={{ borderRadius:"4px", overflow:"hidden", border:`1px solid ${C.border}` }}>
+                  <div style={{ position:"relative", height:"200px" }}>
+                    <img src={item.img} alt={item.title} style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(0.55)" }}/>
+                    <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.1) 100%)" }}/>
+                    <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1.25rem" }}>
+                      <div style={{ fontSize:"10px", color:C.accent, marginBottom:"6px", letterSpacing:"0.12em", textTransform:"uppercase" }}>{item.tag}</div>
+                      <h3 style={{ fontSize:"17px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:"#fff", margin:"0 0 6px" }}>{item.title}</h3>
+                      <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.7)", lineHeight:1.6, margin:"0 0 10px" }}>{item.desc}</p>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                        <span style={{ fontSize:"18px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.accent }}>desde {item.desde}</span>
+                        <span style={{ fontSize:"11px", color:C.accent, border:"1px solid rgba(242,169,0,0.3)", padding:"3px 10px", borderRadius:"2px" }}>{item.mant}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ display:"flex", gap:"10px", overflowX:"auto", padding:"0.5rem 0" }}>
+              {SERVICIOS.map((item,i) => (
+                <AccordionItem key={i} item={item} isActive={activeIdx===i} onHover={()=>setActiveIdx(i)}/>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -358,7 +411,7 @@ export default function FlowMind() {
       <section id="nosotros" style={{ ...sec, background:C.bg2 }}>
         <div style={{ maxWidth:"1200px", margin:"0 auto" }}>
           <span style={slabel}>Cómo trabajamos</span>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))", gap:"1px", border:`1px solid ${C.border}`, borderRadius:"8px", overflow:"hidden" }}>
+          <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2,1fr)" : "repeat(auto-fill,minmax(260px,1fr))", gap:"1px", border:`1px solid ${C.border}`, borderRadius:"8px", overflow:"hidden" }}>
             {[
               ["01","Análisis gratuito","Antes de cotizar, analizamos tu negocio y procesos actuales sin ningún costo."],
               ["02","Diseño del flujo","Diseñamos la automatización más eficiente para tu caso específico."],
@@ -377,7 +430,7 @@ export default function FlowMind() {
 
       {/* CONTACTO */}
       <section id="contacto" style={sec}>
-        <div style={{ maxWidth:"1200px", margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:"6rem" }}>
+        <div style={{ maxWidth:"1200px", margin:"0 auto", display:"grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit,minmax(280px,1fr))", gap: isMobile ? "3rem" : "6rem" }}>
           <div>
             <span style={slabel}>Contacto</span>
             <h2 style={sh2}>Hablemos de<br/>tu negocio.</h2>
