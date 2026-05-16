@@ -30,22 +30,70 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@60
 
 // ── LOGO ─────────────────────────────────────────────────────────────────────
 function Logo({ size = 38 }) {
+  const s = size;
+  const cx = s/2, cy = s/2;
+  const sc = s/64;
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="12" fill="none" stroke={C.primary} strokeWidth="2"/>
-      <circle cx="32" cy="32" r="5" fill={C.primary}/>
-      <circle cx="12" cy="18" r="6" fill="none" stroke={C.primary} strokeWidth="1.5"/>
-      <circle cx="12" cy="18" r="2.5" fill={C.primary} opacity=".8"/>
-      <circle cx="52" cy="18" r="6" fill="none" stroke={C.primary} strokeWidth="1.5"/>
-      <circle cx="52" cy="18" r="2.5" fill={C.primary} opacity=".8"/>
-      <circle cx="10" cy="46" r="5" fill="none" stroke={C.accent} strokeWidth="1.2"/>
-      <circle cx="10" cy="46" r="2" fill={C.accent} opacity=".7"/>
-      <circle cx="54" cy="46" r="5" fill="none" stroke={C.accent} strokeWidth="1.2"/>
-      <circle cx="54" cy="46" r="2" fill={C.accent} opacity=".7"/>
-      <line x1="20" y1="26" x2="16" y2="22" stroke={C.primary} strokeWidth="1.2" opacity=".6"/>
-      <line x1="44" y1="26" x2="48" y2="22" stroke={C.primary} strokeWidth="1.2" opacity=".6"/>
-      <line x1="21" y1="38" x2="14" y2="43" stroke={C.accent} strokeWidth="1" opacity=".5"/>
-      <line x1="43" y1="38" x2="50" y2="43" stroke={C.accent} strokeWidth="1" opacity=".5"/>
+    <svg width={s} height={s} viewBox="0 0 64 64" fill="none" style={{ overflow:"visible" }}>
+      <defs>
+        <style>{`
+          @keyframes lp1{0%,100%{opacity:1}50%{opacity:0.3}}
+          @keyframes lp2{0%,100%{opacity:0.8}50%{opacity:0.15}}
+          @keyframes lcr{0%,100%{r:8}50%{r:5}}
+          .la1{animation:lp1 2s ease-in-out infinite}
+          .la2{animation:lp2 2.8s ease-in-out 0.4s infinite}
+          .la3{animation:lp2 3.2s ease-in-out 1s infinite}
+          .lac{animation:lcr 2s ease-in-out infinite}
+        `}</style>
+      </defs>
+
+      {/* Anillos orbitales */}
+      <circle cx="32" cy="32" r="30" fill="none" stroke={C.primary} strokeWidth="0.4" strokeDasharray="3,6" opacity="0.3"/>
+      <circle cx="32" cy="32" r="20" fill="none" stroke={C.accent}   strokeWidth="0.4" strokeDasharray="2,7" opacity="0.25"/>
+
+      {/* Conexiones centro → nodos internos */}
+      <line x1="32" y1="32" x2="22" y2="24" stroke={C.accent}   strokeWidth="0.8" opacity="0.5"/>
+      <line x1="32" y1="32" x2="42" y2="24" stroke={C.accent}   strokeWidth="0.8" opacity="0.5"/>
+      <line x1="32" y1="32" x2="22" y2="40" stroke={C.accent}   strokeWidth="0.8" opacity="0.5"/>
+      <line x1="32" y1="32" x2="42" y2="40" stroke={C.accent}   strokeWidth="0.8" opacity="0.5"/>
+
+      {/* Conexiones centro → nodos medios */}
+      <line x1="32" y1="32" x2="32" y2="14" stroke={C.primary} strokeWidth="0.7" opacity="0.35"/>
+      <line x1="32" y1="32" x2="16" y2="44" stroke={C.primary} strokeWidth="0.7" opacity="0.35"/>
+      <line x1="32" y1="32" x2="48" y2="44" stroke={C.primary} strokeWidth="0.7" opacity="0.35"/>
+
+      {/* Nodos medios */}
+      <circle cx="32" cy="14" r="3.5" fill="#fffdf1" stroke={C.primary} strokeWidth="1.2"/>
+      <circle cx="32" cy="14" r="1.5" fill={C.primary}/>
+      <circle cx="16" cy="44" r="3.5" fill="#fffdf1" stroke={C.primary} strokeWidth="1.2"/>
+      <circle cx="16" cy="44" r="1.5" fill={C.primary}/>
+      <circle cx="48" cy="44" r="3.5" fill="#fffdf1" stroke={C.primary} strokeWidth="1.2"/>
+      <circle cx="48" cy="44" r="1.5" fill={C.primary}/>
+
+      {/* Nodos internos con pulso */}
+      <circle cx="22" cy="24" r="2.5" fill="#fffdf1" stroke={C.primary2} strokeWidth="0.9" className="la2"/>
+      <circle cx="42" cy="24" r="2.5" fill="#fffdf1" stroke={C.primary2} strokeWidth="0.9" className="la3"/>
+      <circle cx="22" cy="40" r="2.5" fill="#fffdf1" stroke={C.primary2} strokeWidth="0.9" className="la2"/>
+      <circle cx="42" cy="40" r="2.5" fill="#fffdf1" stroke={C.primary2} strokeWidth="0.9" className="la3"/>
+
+      {/* Nodos exteriores */}
+      <circle cx="32" cy="4"  r="2.5" fill="#fffdf1" stroke={C.primary} strokeWidth="1" className="la3"/>
+      <circle cx="6"  cy="52" r="2.5" fill="#fffdf1" stroke={C.primary} strokeWidth="1" className="la1"/>
+      <circle cx="58" cy="52" r="2.5" fill="#fffdf1" stroke={C.primary} strokeWidth="1" className="la2"/>
+
+      {/* Nodo central */}
+      <circle cx="32" cy="32" r="10" fill="#fffdf1" stroke={C.primary} strokeWidth="1.5"/>
+      <circle cx="32" cy="32" r="7"  fill="none"    stroke={C.accent}  strokeWidth="0.7" opacity="0.6"/>
+      <circle cx="32" cy="32" fill={C.primary} className="lac"/>
+
+      {/* Partículas */}
+      <circle r="1.5" fill={C.accent} opacity="0.9"><animateMotion dur="2.4s" repeatCount="indefinite"         path="M32 32 L22 24"/></circle>
+      <circle r="1.2" fill={C.accent} opacity="0.8"><animateMotion dur="2.8s" repeatCount="indefinite" begin="0.5s" path="M32 32 L42 24"/></circle>
+      <circle r="1.2" fill="#c9a84c"  opacity="0.8"><animateMotion dur="2.2s" repeatCount="indefinite" begin="1s"   path="M32 32 L22 40"/></circle>
+      <circle r="1.5" fill={C.accent} opacity="0.9"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.5s" path="M32 32 L42 40"/></circle>
+      <circle r="1"   fill={C.primary} opacity="0.7"><animateMotion dur="3s"   repeatCount="indefinite" begin="0.8s" path="M32 32 L32 14"/></circle>
+      <circle r="1"   fill={C.primary} opacity="0.7"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0.3s" path="M32 32 L16 44"/></circle>
+      <circle r="1"   fill={C.primary} opacity="0.7"><animateMotion dur="2.9s" repeatCount="indefinite" begin="1.2s" path="M32 32 L48 44"/></circle>
     </svg>
   );
 }
