@@ -475,25 +475,30 @@ export default function FlowMind() {
           {isMobile ? (
             <div style={{ display:"flex", flexDirection:"column", gap:"1rem" }}>
               {SERVICIOS.map((item,i) => (
-                <div key={i} style={{ borderRadius:"4px", overflow:"hidden", border:`1px solid ${C.border}` }}>
-                  <div style={{ position:"relative", height:"200px" }}>
-                    <img src={item.img} alt={item.title} style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(0.55)" }}/>
-                    <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.1) 100%)" }}/>
-                    <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1.25rem" }}>
-                      <div style={{ fontSize:"10px", color:C.accent, marginBottom:"6px", letterSpacing:"0.12em", textTransform:"uppercase" }}>{item.tag}</div>
-                      <h3 style={{ fontSize:"17px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:"#fff", margin:"0 0 6px" }}>{item.title}</h3>
-                      <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.7)", lineHeight:1.6, margin:"0 0 8px" }}>{item.desc}</p>
-                      <ul style={{ margin:"0 0 10px", padding:0, listStyle:"none", display:"flex", flexDirection:"column", gap:"3px" }}>
-                        {item.features.map((f,i) => (
-                          <li key={i} style={{ fontSize:"11px", color:"rgba(255,255,255,0.65)", display:"flex", gap:"5px" }}>
-                            <span style={{ color:C.accent, flexShrink:0 }}>✓</span>{f}
-                          </li>
-                        ))}
-                      </ul>
-                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                        <span style={{ fontSize:"18px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.accent }}>desde {item.desde}</span>
-                        <span style={{ fontSize:"11px", color:C.accent, border:"1px solid rgba(242,169,0,0.3)", padding:"3px 10px", borderRadius:"2px" }}>{item.mant}</span>
+                <div key={i} style={{ borderRadius:"8px", overflow:"hidden", border:`1px solid ${C.border}`, background:"rgba(44,33,28,0.92)" }}>
+                  <div style={{ position:"relative", height:"160px" }}>
+                    <img src={item.img} alt={item.title} style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(0.45)" }}/>
+                    <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(44,33,28,0.95) 100%)" }}/>
+                    <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1rem" }}>
+                      <div style={{ fontSize:"9px", color:C.accent, letterSpacing:"0.15em", textTransform:"uppercase", marginBottom:"4px" }}>{item.tag}</div>
+                      <h3 style={{ fontSize:"18px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:"#fff", margin:0 }}>{item.title}</h3>
+                    </div>
+                  </div>
+                  <div style={{ padding:"1rem" }}>
+                    <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.65)", lineHeight:1.6, margin:"0 0 10px" }}>{item.desc}</p>
+                    <ul style={{ margin:"0 0 12px", padding:0, listStyle:"none", display:"flex", flexDirection:"column", gap:"5px" }}>
+                      {item.features.map((f,fi) => (
+                        <li key={fi} style={{ fontSize:"12px", color:"rgba(255,255,255,0.7)", display:"flex", gap:"6px", alignItems:"flex-start" }}>
+                          <span style={{ color:C.accent, flexShrink:0 }}>✓</span>{f}
+                        </li>
+                      ))}
+                    </ul>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:"1px solid rgba(255,255,255,0.1)", paddingTop:"10px" }}>
+                      <div>
+                        <span style={{ fontSize:"11px", color:"rgba(255,255,255,0.4)" }}>desde </span>
+                        <span style={{ fontSize:"20px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.accent }}>{item.desde}</span>
                       </div>
+                      <span style={{ fontSize:"11px", color:C.accent, border:"1px solid rgba(242,169,0,0.3)", padding:"4px 10px", borderRadius:"2px" }}>{item.mant}</span>
                     </div>
                   </div>
                 </div>
