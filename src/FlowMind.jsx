@@ -239,7 +239,7 @@ function Formulario() {
     if (!form.nombre || !form.email || !form.mensaje) return;
     setEstado("enviando");
     try {
-      const res = await fetch("https://formspree.io/f/xpwzgvkd", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ ...form, _subject:"Nuevo contacto FlowMind" }) });
+      const res = await fetch("https://formspree.io/f/mvzyprdz", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ ...form, _subject:"Nuevo contacto FlowMind" }) });
       setEstado(res.ok ? "ok" : "error");
       if (res.ok) setForm({ nombre:"", email:"", empresa:"", mensaje:"" });
     } catch { setEstado("error"); }
