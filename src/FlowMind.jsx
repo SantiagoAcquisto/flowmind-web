@@ -395,7 +395,7 @@ export default function FlowMind() {
             </div>
             <div>
               <p style={{ fontSize:"clamp(1rem,2vw,1.15rem)", color:C.muted, lineHeight:1.8, marginBottom:"3rem", fontWeight:300 }}>
-                Automatizamos los procesos repetitivos de tu negocio con n8n y Claude AI. Bots de WhatsApp, agentes inteligentes y flujos que trabajan 24/7 — sin que necesites saber de tecnología.
+                ¿Cuántas horas perdés respondiendo siempre las mismas preguntas, cargando datos a mano o haciendo tareas que se repiten todos los días? Nosotros las automatizamos para que vos te enfoques en lo que realmente importa: hacer crecer tu negocio.
               </p>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"2rem", borderTop:`1px solid ${C.border}`, paddingTop:"2rem" }}>
                 {[["24/7","Operación"],["48hs","Entrega"],["0","Código requerido"]].map(([v,l]) => (
@@ -419,7 +419,7 @@ export default function FlowMind() {
               <h2 style={sh2}>Automatización sin vueltas.</h2>
             </div>
             <p style={{ fontSize:"16px", color:C.muted, lineHeight:1.8, fontWeight:300, alignSelf:"flex-end" }}>
-              No vendemos software genérico. Analizamos tu negocio, identificamos qué automatizar primero y construimos soluciones que realmente funcionan desde el día uno.
+              Imaginá que tu negocio responde consultas solo, registra pedidos automáticamente y te avisa cuando algo necesita tu atención — todo sin que vos hagas nada. Eso es lo que hacemos: conectamos las herramientas que ya usás para que trabajen solas mientras vos te dedicás a vender.
             </p>
           </div>
           <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr", gap:"1.5rem", marginBottom:"5rem" }}>
@@ -429,7 +429,7 @@ export default function FlowMind() {
                 <Logo size={32}/>
                 <div>
                   <p style={{ fontSize:"15px", fontWeight:600, color:C.text, marginBottom:"8px" }}>Flujos inteligentes para negocios reales</p>
-                  <p style={{ fontSize:"13px", color:C.muted, lineHeight:1.6 }}>Combinamos n8n, Claude AI y APIs para automatizar lo que hoy hacés a mano.</p>
+                  <p style={{ fontSize:"13px", color:C.muted, lineHeight:1.6 }}>Tu negocio trabajando solo, las 24 horas, los 7 días de la semana — sin sumar personal ni complicaciones.</p>
                 </div>
                 <button onClick={()=>scrollTo("contacto")} style={{ padding:"0.7rem 1.5rem", background:"transparent", color:C.primary, border:`1px solid ${C.border}`, borderRadius:"4px", cursor:"pointer", fontFamily:"Inter,sans-serif", fontSize:"12px", alignSelf:"flex-start", transition:"border-color 0.2s" }}
                   onMouseEnter={e=>e.currentTarget.style.borderColor=C.primary}
