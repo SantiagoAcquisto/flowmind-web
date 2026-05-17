@@ -193,11 +193,51 @@ function WorkflowSVG() {
 
 // ── ACCORDION// ── ACCORDION ─────────────────────────────────────────────────────────────────
 const SERVICIOS = [
-  { title:"Bot de WhatsApp",        tag:"24/7 · sin código",    img:"https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=500&h=600&fit=crop&q=80", desc:"Tu negocio responde solo a cualquier hora. Menú interactivo, respuestas automáticas y notificaciones al equipo.", desde:"$80 USD",   mant:"$30/mes" },
-  { title:"Agente IA en web",       tag:"Claude AI · widget",   img:"https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=500&h=600&fit=crop&q=80", desc:"Chatbot entrenado con la información de tu negocio. Califica leads y responde en español e inglés.",            desde:"$100 USD",  mant:"$35/mes" },
-  { title:"Automatización completa",tag:"WA + IA + Sheets",     img:"https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=500&h=600&fit=crop&q=80", desc:"WhatsApp, IA y Google Sheets integrados. El proceso comercial en piloto automático.",                          desde:"$150 USD",  mant:"$50/mes" },
-  { title:"E-commerce",             tag:"React · Node · MySQL", img:"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=600&fit=crop&q=80", desc:"Tienda online completa con catálogo, carrito y panel admin. Sin comisiones — tuya para siempre.",               desde:"$500 USD",  mant:"$80/mes" },
-  { title:"Consultoría IA",         tag:"estrategia · plan",    img:"https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&h=600&fit=crop&q=80", desc:"Analizamos tu negocio e identificamos qué automatizar primero para el mayor retorno.",                           desde:"$40 USD/h", mant:"—"       },
+  {
+    title:"Bot de WhatsApp",
+    tag:"24/7 · sin código",
+    img:"https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=500&h=600&fit=crop&q=80",
+    desc:"Tu negocio responde solo a cualquier hora. Menú interactivo, respuestas automáticas y notificaciones al equipo.",
+    features:["Responde consultas frecuentes automáticamente","Menú interactivo con opciones personalizadas","Notifica al equipo cuando hay un lead caliente","Registra consultas en Google Sheets","Responde distinto en horario y fuera de horario"],
+    desde:"USD 80",
+    mant:"USD 30/mes",
+  },
+  {
+    title:"Agente IA en web",
+    tag:"Claude AI · widget",
+    img:"https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=500&h=600&fit=crop&q=80",
+    desc:"Chatbot entrenado con la información de tu negocio. Califica leads y responde en español e inglés.",
+    features:["Entrenado con info real de tu negocio","Califica y clasifica leads automáticamente","Responde en español e inglés","Widget flotante integrado en tu web","Deriva al equipo cuando el cliente está listo para comprar"],
+    desde:"USD 100",
+    mant:"USD 35/mes",
+  },
+  {
+    title:"Automatización completa",
+    tag:"WA + IA + Sheets",
+    img:"https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=500&h=600&fit=crop&q=80",
+    desc:"WhatsApp, IA y Google Sheets integrados. El proceso comercial en piloto automático.",
+    features:["Bot de WhatsApp con IA para atención inicial","Clasifica consultas automáticamente con IA","Registra datos del cliente en Google Sheets","Dashboard con métricas de conversaciones","Notifica al equipo según el tipo de lead"],
+    desde:"USD 150",
+    mant:"USD 50/mes",
+  },
+  {
+    title:"E-commerce",
+    tag:"React · Node · MySQL",
+    img:"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=600&fit=crop&q=80",
+    desc:"Tienda online completa con catálogo, carrito y panel admin. Sin comisiones — tuya para siempre.",
+    features:["Catálogo de productos con fotos y categorías","Carrito de compras funcional","Panel admin con métricas y gestión de stock","Dominio + hosting + SSL incluidos","Notificaciones WhatsApp de pedidos (opcional)"],
+    desde:"USD 500",
+    mant:"USD 80/mes",
+  },
+  {
+    title:"Consultoría IA",
+    tag:"estrategia · plan",
+    img:"https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&h=600&fit=crop&q=80",
+    desc:"Analizamos tu negocio e identificamos qué automatizar primero para el mayor retorno.",
+    features:["Análisis de procesos actuales del negocio","Identificación de oportunidades de automatización","Propuesta de solución con herramientas y costos","Hoja de ruta de implementación por etapas","Informe escrito con recomendaciones"],
+    desde:"USD 40/h",
+    mant:"—",
+  },
 ];
 
 function AccordionItem({ item, isActive, onHover }) {
@@ -209,16 +249,23 @@ function AccordionItem({ item, isActive, onHover }) {
         <div style={{ position:"absolute", bottom:"90px", left:"50%", transform:"translateX(-50%) rotate(90deg)", whiteSpace:"nowrap", fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.75)", fontFamily:"Inter,sans-serif", letterSpacing:"0.1em", textTransform:"uppercase" }}>{item.title}</div>
       )}
       {isActive && (
-        <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"2rem" }}>
-          <div style={{ fontSize:"10px", color:C.accent, marginBottom:"8px", letterSpacing:"0.15em", textTransform:"uppercase", fontFamily:"Inter,sans-serif" }}>{item.tag}</div>
-          <h3 style={{ fontSize:"22px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:"#fff", margin:"0 0 10px", lineHeight:1.2 }}>{item.title}</h3>
-          <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 1.25rem" }}>{item.desc}</p>
-          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:"1px solid rgba(255,255,255,0.12)", paddingTop:"1rem" }}>
+        <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1.5rem", overflowY:"auto", maxHeight:"100%" }}>
+          <div style={{ fontSize:"10px", color:C.accent, marginBottom:"6px", letterSpacing:"0.15em", textTransform:"uppercase", fontFamily:"Inter,sans-serif" }}>{item.tag}</div>
+          <h3 style={{ fontSize:"19px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:"#fff", margin:"0 0 6px", lineHeight:1.2 }}>{item.title}</h3>
+          <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.65)", lineHeight:1.6, margin:"0 0 10px" }}>{item.desc}</p>
+          <ul style={{ margin:"0 0 12px", padding:0, listStyle:"none", display:"flex", flexDirection:"column", gap:"4px" }}>
+            {item.features.map((f,i) => (
+              <li key={i} style={{ fontSize:"11px", color:"rgba(255,255,255,0.75)", display:"flex", gap:"6px", alignItems:"flex-start" }}>
+                <span style={{ color:C.accent, flexShrink:0, marginTop:"1px" }}>✓</span>{f}
+              </li>
+            ))}
+          </ul>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:"1px solid rgba(255,255,255,0.12)", paddingTop:"10px" }}>
             <div>
               <span style={{ fontSize:"11px", color:"rgba(255,255,255,0.45)", fontFamily:"Inter,sans-serif" }}>desde </span>
-              <span style={{ fontSize:"22px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.accent }}>{item.desde}</span>
+              <span style={{ fontSize:"20px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.accent }}>{item.desde}</span>
             </div>
-            <div style={{ fontSize:"11px", color:C.accent, border:"1px solid rgba(242,169,0,0.3)", padding:"4px 12px", borderRadius:"2px", fontFamily:"Inter,sans-serif" }}>{item.mant}</div>
+            <div style={{ fontSize:"11px", color:C.accent, border:"1px solid rgba(242,169,0,0.3)", padding:"4px 10px", borderRadius:"2px", fontFamily:"Inter,sans-serif" }}>{item.mant}</div>
           </div>
         </div>
       )}
@@ -435,7 +482,14 @@ export default function FlowMind() {
                     <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1.25rem" }}>
                       <div style={{ fontSize:"10px", color:C.accent, marginBottom:"6px", letterSpacing:"0.12em", textTransform:"uppercase" }}>{item.tag}</div>
                       <h3 style={{ fontSize:"17px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:"#fff", margin:"0 0 6px" }}>{item.title}</h3>
-                      <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.7)", lineHeight:1.6, margin:"0 0 10px" }}>{item.desc}</p>
+                      <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.7)", lineHeight:1.6, margin:"0 0 8px" }}>{item.desc}</p>
+                      <ul style={{ margin:"0 0 10px", padding:0, listStyle:"none", display:"flex", flexDirection:"column", gap:"3px" }}>
+                        {item.features.map((f,i) => (
+                          <li key={i} style={{ fontSize:"11px", color:"rgba(255,255,255,0.65)", display:"flex", gap:"5px" }}>
+                            <span style={{ color:C.accent, flexShrink:0 }}>✓</span>{f}
+                          </li>
+                        ))}
+                      </ul>
                       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                         <span style={{ fontSize:"18px", fontFamily:"'Playfair Display',serif", fontWeight:700, color:C.accent }}>desde {item.desde}</span>
                         <span style={{ fontSize:"11px", color:C.accent, border:"1px solid rgba(242,169,0,0.3)", padding:"3px 10px", borderRadius:"2px" }}>{item.mant}</span>
